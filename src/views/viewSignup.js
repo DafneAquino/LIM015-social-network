@@ -67,11 +67,23 @@ export default () => {
       createUser(email, password)
         .then((userCredential) => {
           containerModal.reset();
-          console.log('Registro exitoso', firebase.auth().currentUser.uid, userCredential, name, email, password);
+          console.log('Registro exitoso', userCredential, name, email, password);
+          // Crea colección con datos del registro de usuario
+          firebase.firestore().collection('users').add({
+            nameRegister: `${name}`,
+            emailRegister: `${email}`,
+            passwordRegister: `${password}`,
+            idUserActive: `${firebase.auth().currentUser.uid}`,
+          })
+            .then((docRef) => {
+              console.log('ID de Documento de la Colección Users: ', docRef.id);
+            })
+            .catch((error) => {
+              console.error('Error al añadir el documento: ', error);
+            });
           // Enviar mensaje de verificación firebase
           sendEmail()
             .then(() => {
-              // eslint-disable-next-line no-alert
               alert('Se ha enviado un correo de verificación');
               window.location.hash = '#/';
             }).catch((error) => {

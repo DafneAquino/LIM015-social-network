@@ -1,4 +1,4 @@
-import { ingresarConEmail, ingresarConGoogle, sendDataUser } from './firebaseFunctions.js';
+import { signInEmail, signInGoogle } from './firebaseFunctions.js';
 
 export default () => {
   document.querySelector('nav').style.display = 'none';
@@ -51,8 +51,7 @@ export default () => {
       errorPassLogIn.style.visibility = 'hidden';
     }
 
-    // Ingresar con email y contraseña
-    ingresarConEmail(email, pass)
+    signInEmail(email, pass)
       .then((userCredential) => {
         const user = userCredential.user;
         // console.log('user:', user, 'user.emailVerified:', user.emailVerified);
@@ -63,6 +62,7 @@ export default () => {
         } else {
           window.location.hash = '#/inicio';
         }
+        console.log('El usuario es:', user, 'ingresó con correo');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -85,24 +85,25 @@ export default () => {
         }
       });
   });
+
+  // Ingresar con cuenta de Google
   const btnGoogle = divElement.querySelector('#google');
   btnGoogle.addEventListener('click', () => {
-    ingresarConGoogle()
+    signInGoogle()
       .then((result) => {
         const credential = result.credential;
         const token = credential.accessToken;
         const user = result.user;
-        console.log(credential, token, user);
-        sendDataUser();
-        console.log(sendDataUser().name);
+        console.log('El token del usuario es:', token);
         window.location.hash = '#/inicio';
+        console.log('El usuario es:', user.displayName, 'linea 99 viewLogin.js');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.email;
         const credential = error.credential;
-        document.write('Para abrir los pop up utiliza npm start: ¡error!=> ', errorCode, errorMessage, email, credential);
+        document.write('¡error!=> ', errorCode, errorMessage, email, credential);
       });
   });
   return divElement;
