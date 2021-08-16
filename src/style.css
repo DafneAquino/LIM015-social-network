@@ -271,17 +271,17 @@ body {
   align-items: center;
 }
 #infoUsuario figure {
-  width: 120px;
-  height: 120px;
-  margin: 30px;
+  width: 110px;
+  height: 110px;
+  margin: 20px 15px 20px 20px;
   border-radius: 50%;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   cursor: pointer;
   overflow: hidden;
 }
 #infoUsuario figure img {
-  height: 120px;
-  margin-left: -15px;
+  height: 110px;
+  width: 110px;
 }
 #infoUsuario div h4 {
   color: #24baac;
@@ -294,14 +294,14 @@ body {
 }
 @media (min-width: 600px) {
   #infoUsuario figure {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     margin-left: 60px;
     margin-right: 50px;
   }
   #infoUsuario figure img {
-    height: 200px;
-    margin-left: -15px;
+    height: 160px;
+    width: 160px;
   }
   #infoUsuario div h4 {
     font-size: 26px;
@@ -327,6 +327,7 @@ body {
   background: #fdf8f8;
   height: 120px;
   overflow-wrap: break-word;
+  resize: none;
 }
 #escribirPost div {
   display: flex;

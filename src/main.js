@@ -4,9 +4,12 @@ import { changeView } from './lib/index.js';
 const init = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
+      const uid = user.uid;
+      console.log('ID del usuario activo: ', uid);
       changeView(window.location.hash);
     } else {
-      window.location.hash = '#/';
+      // User is signed out
+      // ...
     }
   });
   window.addEventListener('hashchange', () => changeView(window.location.hash));

@@ -1,5 +1,3 @@
-import { getData, user } from './firebaseFunctions.js';
-
 export default () => {
   document.querySelector('nav').style.display = 'none';
   document.querySelector('footer').style.display = 'none';
@@ -13,33 +11,34 @@ export default () => {
     </div>
     <div id="infoUsuario">
       <figure>
-        <img src="img/foto-ejemplo.jpg" alt="Foto del usuario">
+        <img id="userPhoto" src="img/foto-ejemplo.jpg" alt="Foto del usuario">
       </figure>
       <div>
-        <h4 id="nombreUsuario">${user().displayName}</h4>
-        <p>${user().description}</p>
+        <h4 id="userName">Name User</h4>
+        <p id="userDescription">Description User</p>
       </div>
     </div>
     <div id="escribirPost">
-      <textarea id="post" placeholder="¿Qué quieres compartir?"></textarea>
+      <textarea id="textToPost" placeholder="¿Qué quieres compartir?"></textarea>
       <div>
-        <img id="btnFile" src="img/agregar-img.png" alt="Botón para cargar imagen">
-        <input id="subirFile" type="file" accept="image/jpeg" style="display:none">
-        <button type= "submit" id="btnCompartir" >Compartir</button>
+        <img id="uploadImageButton" src="img/agregar-img.png" alt="Botón para cargar imagen">
+        <input id="imageToPost" type="file" accept="image/jpeg" style="display:none">
+        <button type="submit" id="shareButton">Compartir</button>
       </div>
     </div>
     <div id="sectionPosts">
       <table>
         <tr>
-          <th>Publicado por Mariana López</th>
+          <th id="userPost">Publicado por Mariana López</th>
         </tr>
         <tr>
-          <td>The user-select property specifies whether the text of an element can be selected.
-
-          In web browsers, if you double-click on some text it will be selected/highlighted. This property can be used to prevent this.</td>
+          <td id="textPost">The user-select property specifies whether the text of an element can be selected.
+              In web browsers, if you double-click on some text it will be selected/highlighted. 
+              This property can be used to prevent this
+          </td>
         </tr>
         <tr>
-          <td id="userImage"></td>
+          <td id="picturePost" style="display: none;"></td>
         </tr>
         <tr>
           <td>
@@ -50,47 +49,107 @@ export default () => {
       </table>
     </div>`;
 
-  // Obtén el perfil de un usuario
-  getData()
-    .then((doc) => {
-      console.log(doc);
-      if (doc.exists) {
-        console.log('Document data:', doc.data());
-      } else {
-      // doc.data() will be undefined in this case
-        console.log('No such document!');
-      }
-    })
-    .catch((error) => {
-      console.log('Error getting document:', error, user());
+  // Obtener el perfil de un usuario (CON DATOS DE GOOGLE)
+  const user = firebase.auth().currentUser;
+  const userPhoto = divElement.querySelector('#userPhoto');
+  const userName = divElement.querySelector('#userName');
+  const userDescription = divElement.querySelector('#userDescription');
+  if (user !== null) {
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+    userPhoto.src = `${photoURL}`;
+    userName.textContent = `${displayName}`;
+    userDescription.textContent = `${email}`;
+    // No hay datos de usuario (Ingreso con correo)
+    if (displayName === null) {
+      userPhoto.src = 'img/profile-default.png';
+      userDescription.textContent = 'Descripción';
+    }
+  }
+
+  // Obtener los datos de un usuario (CON DATOS DE REGISTRO CORREO)
+  firebase.firestore().collection('users').get()
+    .then((querySnapshot) => { // TODO: Mostrar 'User' en ingreso con correo al publicar
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => name de registro: ${doc.data().nameRegister} ID: ${doc.data().idUserActive}`);
+        console.log(`Id del usuario: ${user.uid}`);
+        if (user.uid === `${doc.data().idUserActive}`) { // quitar backdigs ``
+          userName.textContent = doc.data().nameRegister;
+          userDescription.textContent = doc.data().emailRegister;
+        } else {
+          console.log('Ese dato no existe en este documento');
+        }
+      });
     });
 
-  divElement.querySelector('#btnFile').addEventListener('click', () => {
-    divElement.querySelector('#subirFile').click();
+  // Abre input file al seleccionar el botón Subir Imagen
+  const uploadImageButton = divElement.querySelector('#uploadImageButton');
+  const imageToPost = divElement.querySelector('#imageToPost');
+  const picturePost = divElement.querySelector('#picturePost');
+  uploadImageButton.addEventListener('click', () => {
+    imageToPost.click();
+    imageToPost.addEventListener('change', (e) => {
+      const targetFile = e.target.files[0];
+      console.log(targetFile);
+      // Create a storage reference from our storage service
+      const storageRef = firebase.storage().ref(`post_image/${targetFile.name}`);
+      storageRef.put(targetFile)
+        .then((snapshot) => {
+          console.log('Se subió un blob o un file!', snapshot);
+          picturePost.textContent = `${targetFile.name}`;
+          picturePost.style.display = 'block';
+        });
+    });
   });
 
   // Función para publicar post
-  divElement.querySelector('#btnCompartir').addEventListener('click', () => {
-    const postTxt = divElement.querySelector('#post').value;
-    const postImg = divElement.querySelector('#subirFile').value;
+  const shareButton = divElement.querySelector('#shareButton');
+  shareButton.addEventListener('click', () => {
+    const textToPost = divElement.querySelector('#textToPost');
     const userPost = divElement.querySelector('#userPost');
-    const userImage = divElement.querySelector('#userImage');
-    firebase.firestore().collection('users').add({
-      publicacion: postTxt,
-      imagen: postImg,
-    })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-        userPost.textContent = postTxt;
-        userImage.textContent = postImg;
-        console.log(postTxt);
+    const textPost = divElement.querySelector('#textPost');
+    if (textToPost.value !== '') {
+      firebase.firestore().collection('posts').add({
+        userWhoPublishes: `Publicado por ${user.displayName}`,
+        publishedText: textToPost.value,
       })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      });
+        .then((docRef) => {
+          console.log('Document written with ID: ', docRef.id);
+          // Obtener los datos de la colección
+          firebase.firestore().collection('posts').get(docRef.id)
+            .then((querySnapshot) => { // TODO: Mostrar 'User' en ingreso con correo al publicar
+              querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${doc.data()}`);
+                if (doc.id === `${docRef.id}`) {
+                  userPost.textContent = doc.data().userWhoPublishes;
+                  textPost.textContent = doc.data().publishedText;
+                } else if (user.displayName === null) {
+                  // Obtiene el nombre de registro del usuario en sesión
+                  firebase.firestore().collection('users').get()
+                    .then((querySnapshotUno) => {
+                      querySnapshotUno.forEach((document) => {
+                        if (user.uid === `${document.data().idUserActive}`) {
+                          userPost.textContent = `Publicado por ${document.data().nameRegister}`;
+                        } else {
+                          console.log('No hay aquí, pasa al sgte documento');
+                        }
+                      });
+                    });
+                } else {
+                  console.log('No existe referencia al documento');
+                }
+              });
+            });
+        })
+        .catch((error) => {
+          console.error('Error adding document: ', error);
+        });
+    }
+    textToPost.value = '';
   });
 
-  // Funcion para cerar sesión
+  // Funcion para cerrar sesión
   const btnSalir = divElement.querySelector('#btnSalir');
   btnSalir.addEventListener('click', () => {
     firebase.auth().signOut()
