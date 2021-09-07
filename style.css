@@ -1,0 +1,539 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+/* Vista Modal */
+.containerRegister {
+  display: flex;
+  flex-flow: column;
+  justify-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 600px;
+  align-items: center;
+  background: white;
+  border: 1px solid white;
+  margin: auto;
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 3px 2px 2px 6px rgba(0.2, 0.2, 0.2, 0.2);
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .containerRegister {
+    width: 60%;
+  }
+}
+@media (max-width: 300px) {
+  .containerRegister {
+    width: 85%;
+  }
+}
+.closeModal {
+  font-family: Arial, Helvetica, sans-serif;
+  right: 0;
+  font-weight: 520;
+  font-size: 20px;
+  text-decoration: none;
+  color: teal;
+  margin-left: auto;
+  padding: 15px 15px 0px 0px;
+  float: right;
+}
+.registerButton {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+.registerButton:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.headerModal {
+  color: #24baac;
+  margin: 40px 0 50px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 26px;
+  font-weight: bolder;
+}
+.registrationForm {
+  margin: 0px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inputRegister {
+  width: 270px;
+  margin: 0px 0 5px 0;
+  position: center;
+  padding: 14px 20px;
+  background-color: #f4f3f3;
+  border: 1px solid #5da6a6;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+.errorRegister {
+  font-size: 14px;
+  color: #e00909;
+  align-self: flex-start;
+  padding-left: 5px;
+  margin-bottom: 10px;
+  visibility: hidden;
+}
+@media (max-width: 768px) {
+  .inputRegister {
+    width: 100%;
+  }
+}
+.inputRegister::placeholder {
+  font-size: 17px;
+}
+.buttonSendData {
+  width: 180px;
+  padding: 10px 40px;
+  margin-bottom: 25px;
+  margin-top: 20px;
+  border: 1px solid #184e77;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: #184e77;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bolder;
+  font-size: 17px;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.loginButton {
+  width: 180px;
+  justify-content: center;
+  position: center;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  padding: 10px 40px;
+  background: #184e77;
+  border-radius: 15px;
+  border: 1px;
+  outline: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.loginButton:hover {
+  color: #000;
+}
+.buttonSendData:hover { /* mover a la línea 116 */
+  opacity: 0.9;
+  cursor: pointer;
+}
+/* Vista Iniciar Sesión */
+.containerLogin {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+}
+.containerMainLogo {
+  margin-top: 70px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  color: #24baac;
+}
+.logoFooter {
+  font-size: 28px;
+}
+.firstSubcontainerLogin {
+  margin: 40px 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.welcomePhrase {
+  margin-bottom: 35px;
+  align-self: center;
+  font-size: 17px;
+}
+.loginForm {
+  display: flex;
+  flex-flow: column;
+  flex-direction: column;
+  align-items: center;
+}
+.inputLogin {
+  width: 270px;
+  margin: 10px 0 5px 0;
+  padding: 14px 20px;
+  border-radius: 15px;
+  border: 1px solid #5da6a6;
+  background-color: #f4f3f3;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+.inputLogin::placeholder {
+  font-size: 17px;
+  background-image: url(img/flecha.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.errorLogin {
+  font-size: 14px;
+  color: #e00909;
+  align-self: flex-start;
+  padding-left: 15px;
+  visibility: hidden;
+}
+.secondSubcontainerLogIn {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.enterWith {
+  margin: 16px 0;
+  font-size: 16px;
+}
+.registerWith {
+  display: flex;
+  width: 100px;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.logoSN {
+  cursor: pointer;
+}
+.logoSN:hover {
+  opacity: 0.7;
+}
+@media (min-width: 768px) {
+  .containerLogin {
+    background-image: url(img/cover-page.png);
+  }
+  .containerLoginPage {
+    background: linear-gradient(#ffffff, #ffffff10);
+    width: 40%;
+  }
+  .containerMainLogo {
+    margin-top: 40px;
+  }
+  .welcomePhrase {
+    margin-bottom: 30px;
+  }
+  .inputLogin {
+    width: 260px;
+    margin: 5px 0;
+  }
+}
+/* Vista Inicio */
+#containerInicio {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  background: #fdf8f8;
+}
+.barraMenu {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: #184e77;
+  padding: 10px 20px;
+  color: #ffffff;
+  justify-content: space-between;
+}
+/* #pantallaView {
+  display: flex;
+  margin-left:50px;
+  margin-top:35px;
+} */
+.btnSalir:hover {
+  cursor: pointer;
+}
+.datosUser{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  margin-left: 12px;
+}
+.portada{
+  display:none;
+  width: 100px;
+  height: 200px;
+}
+.contenedorFoto {
+  width: 120px;
+  height: 120px;
+  margin: 20px 15px 20px 20px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  cursor: pointer;
+  overflow: hidden;
+}
+.userPhoto {
+  height: 120px;
+  width: 120px;
+}
+.userName {
+  color: #24baac;
+  font-size: 20px;
+  padding-bottom: 7px;
+}
+.userDescription {
+  font-size: 18px;
+  color: #837777;
+}
+.publicidad{
+  display:none;
+  width: 100%;
+  margin-top: 100px;
+}
+
+@media (min-width: 600px) {
+  #pantallaView {
+    display: flex;
+    margin-left:50px;
+    margin-top:35px;
+  }
+  #infoUsuario{
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    margin-left: 12px;
+    border-radius: 10px;
+    border: 1px solid #184e77;
+    margin-bottom: 3000px;
+    margin-top:10 px;
+    width: 34%;
+  }
+  .portada{
+    background-image: url(img/fondoPortada.jpg);
+    background-size:cover;
+    display: flex;
+    width: 436px;
+    height: 170px;
+  }
+  #nameDescription{
+    flex-flow: wrap;
+  }
+  .publicidad{
+    display:flex;
+    width: 100%;
+    margin-top: 100px;
+  }
+  #bloquePosts {
+    width: 90%;
+  }
+  #sectionPosts{
+    margin-top: 40px;
+  }
+}
+
+#escribirPost {
+  border: 0.5px solid #184e77;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  margin: 10px 30px;
+  padding: 20px;
+  margin-left: 5%;
+  width: 90%;
+}
+.textToPost {
+  resize: none;
+  font-size: 16px;
+  border: 0.5px solid #184e77;
+  border-radius: 5px;
+  padding: 10px;
+  background: #fdf8f8;
+  height: 120px;
+  overflow-wrap: break-word;
+}
+#icons {
+  display: flex;
+  justify-content: flex-end;
+  /* justify-content: space-between; */
+  margin: 15px 10px 0 10px;
+}
+#btnFile {
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#shareButton {
+  padding: 10px 20px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #184e77;
+  cursor: pointer;
+}
+#shareButton:active { 
+  transform: scale(0.9);
+}
+#sectionPosts {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+#tablaPosts {
+  display: flex;
+  flex-flow: column;
+  width: 90%;
+  border-spacing: 0;
+  margin-top: 30px;
+}
+.cuerpoTabla{
+  margin-bottom: 30px;
+  align-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* .headPost {
+  display: flex;
+} */
+.userWhoPost{
+  display: flex;
+}
+.editYdelete{
+  display: flex;
+}
+/* #sectionPosts div {
+  display: flex;
+} */
+.icono-conf {
+  justify-content: flex-end;
+  align-content: flex-end;
+  height: 20px;
+  margin-top: 4px;
+}
+.icono-conf:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+.datePost {
+  color: #184e77;
+  font-size: 12px;
+  align-self: flex-end;
+}
+.headPost {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #5da6a6;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+  background: #5da6a6;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 18px;
+}
+.userPhotoPost {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+#sectionPosts table tbody tr td {
+  display: flex;
+  border: 1px solid #5da6a6;
+  border-top: none;
+  padding: 5px 10px;
+  overflow-wrap: break-word;
+  text-align: justify;
+  font-size: 16px;
+  line-height: 25px;
+}
+.textPost {
+  flex-flow: column nowrap;
+  justify-items: flex-end;
+}
+
+.publicacion{
+  resize:none;
+  outline: none;
+  border: 0;
+  overflow:hidden;
+  background-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  
+}
+
+#sectionPosts table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.editar{
+  display: none;
+  align-self: flex-end;
+  margin: 15px 10px 0 10px;
+  width: 17%;
+  padding: 5px 10px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #184e77;
+  cursor: pointer;
+}
+.editar:active { 
+  transform: scale(0.9);
+}
+.aparecer {
+  display: block;
+}
+.iconoLike {
+  padding: 5px;
+  border-radius: 50%;
+  border: 1px solid #5da6a6;
+  margin-right: 10px;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
+#logoComent {
+  padding: 7px;
+  border-radius: 50%;
+  border: 1px solid #5da6a6;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+}
+/* #logoLike:active {
+  background: #c74c4c;
+  border: none;
+  transform: scale(0.7);
+}
+#logoComent:active {
+  background: #c9c9c9;
+  border: none;
+  transform: scale(1.2);
+} */
+
+.painted {
+  background: #c74c4c;
+  border: none;
+}
